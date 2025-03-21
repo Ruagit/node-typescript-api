@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { dbPromise } from "../database";
 import { User, PartialUserResponse } from "../types";
 
-const insertUser = async (userPayload: User): Promise<PartialUserResponse> => {
+export const insertUser = async (userPayload: User): Promise<PartialUserResponse> => {
   const db = await dbPromise;
 
   const { fullName, email, password, userType, createdAt } = userPayload;
@@ -24,4 +24,11 @@ const insertUser = async (userPayload: User): Promise<PartialUserResponse> => {
   return user;
 };
 
-export default insertUser;
+export const fetchUserById = async (id: string): Promise<PartialUserResponse | undefined> => {
+  const db = await dbPromise;
+
+  const user = await db.get<User>('SELECT id, fullName, email, userType, createdAt FROM users WHERE id = ?', [id]);
+
+  return user;
+}
+

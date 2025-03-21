@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import insertUser from "../models";
+import { insertUser, fetchUserById } from "../models";
 import { PartialUserResponse } from "../types";
 import { userSchema } from "../utils";
 
-const createUser = async (req: Request, res: Response): Promise<Response<PartialUserResponse>> => {
+export const createUser = async (req: Request, res: Response): Promise<Response<PartialUserResponse>> => {
   try {
     const userPayload = req.body;
 
@@ -20,5 +20,28 @@ const createUser = async (req: Request, res: Response): Promise<Response<Partial
     console.error(error);
     return res.status(500).json({ error: 'An error occurred while creating the user' });
   }
-}
-export default createUser;
+};
+
+export const getUserById = async (req: Request, res: Response): Promise<Response<PartialUserResponse>> => {
+
+  try {
+
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
+
+    const user = await fetchUserById(id);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    return res.status(200).json({ user });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'An error occurred while fetching user details' });
+  }
+};
