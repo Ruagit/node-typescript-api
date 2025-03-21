@@ -40,4 +40,16 @@ There are also commands to build and start a server without nodemon:
 ```
 npm run build
 npm start
+
 ```
+
+#### Postman Testing Examples
+
+post /api/signup
+{
+"fullName": "Justin Bosman",
+"email": "justin.bosman@example.com",
+"password": "Password1",
+"userType": "teacher",
+"createdAt": "2025-03-20T12:34:56.789Z"
+}
