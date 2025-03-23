@@ -4,7 +4,7 @@
   "main": "dist/server.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "node dist/listen.js",
+    "start": "node dist/src/listen.js",
     "dev": "nodemon src/listen.ts",
     "test": "jest",
     "test:watch": "jest --watch",
